@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SoulGuide — A companion for your faith</title>
+  <meta name="description" content="I built SoulGuide because I came back to faith and had no one to walk with. This is for everyone who's ever felt lost on that road." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --ink:#0f0d0a;--ink-soft:#3d3830;--ink-muted:#7a7268;
+      --parchment:#faf7f2;--parchment-dark:#f0ebe1;
+      --flame:#7C6AC7;--flame-light:#a494d8;
+      --gold:#c9a84c;
+      --serif:'Lora',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--sans);background:var(--parchment);color:var(--ink);overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:.35}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(16px);background:rgba(250,247,242,.88);border-bottom:1px solid rgba(201,168,76,.12)}
+    .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .logo-mark{width:32px;height:32px;background:var(--flame);border-radius:8px;display:flex;align-items:center;justify-content:center}
+    .logo-mark svg{width:17px;height:17px}
+    .logo-text{font-family:var(--serif);font-size:17px;font-weight:600;color:var(--ink)}
+    .logo-text span{color:var(--flame)}
+    .nav-right{display:flex;align-items:center;gap:28px}
+    .nav-link{font-size:14px;color:var(--ink-muted);text-decoration:none;transition:color .2s}
+    .nav-link:hover{color:var(--ink)}
+    .nav-cta{background:var(--ink);color:var(--parchment)!important;padding:9px 20px;border-radius:100px;font-size:14px;font-weight:500;transition:background .2s,transform .15s}
+    .nav-cta:hover{background:var(--flame)!important;transform:translateY(-1px)}
+
+    .letter-section{padding:140px 48px 80px;max-width:740px;margin:0 auto}
+    .letter-from{display:flex;align-items:center;gap:14px;margin-bottom:48px;opacity:0;animation:fadeUp .7s ease .1s forwards}
+    .letter-avatar{width:52px;height:52px;background:var(--flame);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:20px;font-weight:600;color:white;flex-shrink:0}
+    .letter-from-text{font-size:15px;color:var(--ink-muted);line-height:1.4}
+    .letter-from-text strong{display:block;color:var(--ink);font-weight:500}
+    .letter-body{opacity:0;animation:fadeUp .8s ease .25s forwards}
+    .letter-body h1{font-family:var(--serif);font-size:clamp(36px,5vw,54px);font-weight:700;line-height:1.12;letter-spacing:-.02em;color:var(--ink);margin-bottom:36px}
+    .letter-body h1 em{font-style:italic;color:var(--flame)}
+    .letter-body p{font-size:18px;line-height:1.8;color:var(--ink-soft);margin-bottom:22px;font-weight:300}
+    .letter-body p strong{font-weight:500;color:var(--ink)}
+    .letter-pull{margin:40px 0;padding:24px 28px;border-left:3px solid var(--gold);background:var(--parchment-dark);border-radius:0 14px 14px 0;font-family:var(--serif);font-size:20px;font-style:italic;color:var(--ink-soft);line-height:1.55}
+    .letter-sign{margin-top:40px;padding-top:32px;border-top:1px solid rgba(15,13,10,.08)}
+    .letter-sign p{font-size:16px;color:var(--ink-muted);margin-bottom:6px}
+    .letter-sign .sig{font-family:var(--serif);font-size:26px;font-style:italic;color:var(--ink);font-weight:500}
+    .letter-actions{margin-top:48px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s ease .5s forwards}
+
+    .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--parchment);padding:16px 28px;border-radius:100px;font-size:16px;font-weight:500;text-decoration:none;transition:background .2s,transform .15s,box-shadow .2s;box-shadow:0 4px 20px rgba(15,13,10,.15)}
+    .btn-primary:hover{background:var(--flame);transform:translateY(-2px);box-shadow:0 8px 30px rgba(124,106,199,.3)}
+    .btn-outline{display:inline-flex;align-items:center;gap:8px;border:1.5px solid rgba(15,13,10,.15);color:var(--ink-soft);padding:15px 24px;border-radius:100px;font-size:15px;text-decoration:none;transition:border-color .2s,color .2s}
+    .btn-outline:hover{border-color:var(--flame);color:var(--flame)}
+
+    .divider{max-width:740px;margin:0 auto;padding:0 48px;height:1px;background:linear-gradient(90deg,transparent,rgba(15,13,10,.08) 30%,rgba(15,13,10,.08) 70%,transparent)}
+
+    .eyebrow{font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--flame);margin-bottom:20px}
+
+    .what-section{padding:100px 48px;max-width:740px;margin:0 auto}
+    .what-section h2{font-family:var(--serif);font-size:clamp(28px,4vw,40px);font-weight:700;line-height:1.15;color:var(--ink);margin-bottom:32px}
+    .what-section h2 em{font-style:italic;color:var(--flame)}
+    .what-section p{font-size:17px;line-height:1.8;color:var(--ink-soft);margin-bottom:20px;font-weight:300}
+
+    .value-section{background:var(--ink);padding:100px 48px}
+    .value-inner{max-width:980px;margin:0 auto}
+    .value-header{text-align:center;margin-bottom:64px}
+    .value-header .eyebrow{color:var(--gold)}
+    .value-header h2{font-family:var(--serif);font-size:clamp(30px,4vw,44px);font-weight:700;color:white;line-height:1.15;margin-bottom:14px}
+    .value-header p{font-size:17px;color:rgba(255,255,255,.4);font-weight:300;max-width:440px;margin:0 auto;line-height:1.65}
+    .value-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .value-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:36px 32px;transition:background .3s,border-color .3s}
+    .value-card:hover{background:rgba(124,106,199,.07);border-color:rgba(124,106,199,.2)}
+    .value-card-icon{font-size:30px;margin-bottom:18px}
+    .value-card h3{font-family:var(--serif);font-size:21px;font-weight:600;color:white;margin-bottom:12px;line-height:1.2}
+    .value-card p{font-size:15px;line-height:1.75;color:rgba(255,255,255,.42);font-weight:300}
+    .value-card p strong{color:rgba(255,255,255,.72);font-weight:400}
+
+    .how-section{padding:100px 48px;max-width:740px;margin:0 auto}
+    .how-section h2{font-family:var(--serif);font-size:clamp(28px,4vw,40px);font-weight:700;line-height:1.15;color:var(--ink);margin-bottom:48px}
+    .how-section h2 em{font-style:italic;color:var(--flame)}
+    .how-steps{display:flex;flex-direction:column}
+    .how-step{display:flex;gap:28px;padding-bottom:40px;position:relative}
+    .how-step:not(:last-child)::after{content:'';position:absolute;left:19px;top:48px;bottom:0;width:1px;background:linear-gradient(180deg,rgba(124,106,199,.3),transparent)}
+    .how-step-left{flex-shrink:0}
+    .how-num{width:40px;height:40px;background:rgba(124,106,199,.1);border:1.5px solid rgba(124,106,199,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:16px;font-weight:600;color:var(--flame)}
+    .how-step-right{padding-top:8px}
+    .how-step-right h3{font-family:var(--serif);font-size:20px;font-weight:600;color:var(--ink);margin-bottom:8px}
+    .how-step-right p{font-size:16px;color:var(--ink-muted);line-height:1.7;font-weight:300}
+
+    .arch-section{background:var(--parchment-dark);padding:100px 48px}
+    .arch-inner{max-width:980px;margin:0 auto}
+    .arch-header{margin-bottom:48px}
+    .arch-header h2{font-family:var(--serif);font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--ink);line-height:1.15;margin-bottom:14px}
+    .arch-header p{font-size:16px;color:var(--ink-soft);font-weight:300;line-height:1.65;max-width:520px}
+    .arch-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+    .arch-card{background:white;border:1px solid rgba(15,13,10,.06);border-radius:16px;padding:22px 18px;transition:transform .2s,box-shadow .2s}
+    .arch-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(15,13,10,.07)}
+    .arch-glyph{font-size:24px;margin-bottom:12px}
+    .arch-card h3{font-family:var(--serif);font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px;line-height:1.3}
+    .arch-card p{font-size:12px;color:var(--ink-muted);line-height:1.5;font-weight:300}
+
+    .privacy-section{padding:80px 48px;max-width:740px;margin:0 auto;text-align:center}
+    .privacy-section h2{font-family:var(--serif);font-size:clamp(26px,3.5vw,36px);font-weight:700;color:var(--ink);margin-bottom:20px}
+    .privacy-section p{font-size:16px;color:var(--ink-soft);line-height:1.8;font-weight:300;margin-bottom:14px}
+
+    .cta-section{background:var(--ink);padding:120px 48px;text-align:center;position:relative;overflow:hidden}
+    .cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(124,106,199,.15) 0%,transparent 70%);pointer-events:none}
+    .cta-section h2{font-family:var(--serif);font-size:clamp(34px,5vw,56px);font-weight:700;color:white;line-height:1.1;margin-bottom:18px;position:relative;z-index:1}
+    .cta-section h2 em{font-style:italic;color:var(--flame-light)}
+    .cta-section>p{font-size:17px;color:rgba(255,255,255,.4);margin-bottom:48px;font-weight:300;position:relative;z-index:1}
+    .cta-buttons{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;position:relative;z-index:1}
+    .btn-white{display:inline-flex;align-items:center;gap:8px;background:white;color:var(--ink);padding:16px 28px;border-radius:100px;font-size:16px;font-weight:500;text-decoration:none;transition:background .2s,transform .15s;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+    .btn-white:hover{background:var(--flame-light);color:white;transform:translateY(-2px)}
+    .btn-ghost{display:inline-flex;align-items:center;gap:8px;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);padding:15px 24px;border-radius:100px;font-size:15px;text-decoration:none;transition:border-color .2s,color .2s}
+    .btn-ghost:hover{border-color:rgba(255,255,255,.5);color:white}
+    .cta-note{margin-top:20px;font-size:13px;color:rgba(255,255,255,.25);position:relative;z-index:1}
+
+    footer{background:var(--ink);border-top:1px solid rgba(255,255,255,.05);padding:36px 48px;display:flex;align-items:center;justify-content:space-between}
+    .footer-links{display:flex;gap:20px}
+    .footer-links a{font-size:13px;color:rgba(255,255,255,.25);text-decoration:none;transition:color .2s}
+    .footer-links a:hover{color:rgba(255,255,255,.5)}
+    .footer-copy{font-size:13px;color:rgba(255,255,255,.15)}
+    .footer-logo-text{font-family:var(--serif);font-size:17px;font-weight:600;color:rgba(255,255,255,.4)}
+    .footer-logo-text span{color:var(--flame-light)}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+
+    @media(max-width:860px){
+      nav{padding:16px 24px}
+      .nav-link:not(.nav-cta){display:none}
+      .letter-section,.what-section,.how-section,.privacy-section{padding:80px 24px}
+      .value-section,.arch-section,.cta-section{padding:80px 24px}
+      .value-grid{grid-template-columns:1fr}
+      .arch-grid{grid-template-columns:repeat(2,1fr)}
+      footer{padding:32px 24px;flex-direction:column;gap:20px;text-align:center}
+    }
+    @media(max-width:540px){
+      .letter-actions,.cta-buttons{flex-direction:column}
+      .btn-primary,.btn-outline,.btn-white,.btn-ghost{width:100%;justify-content:center}
+      .arch-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40 18 C40 18 28 30 28 42 C28 49 33.5 55 40 55 C46.5 55 52 49 52 42 C52 30 40 18 40 18Z" fill="white"/>
+        <path d="M40 38 C40 38 35 44 35 48 C35 51 37.2 53 40 53 C42.8 53 45 51 45 48 C45 44 40 38 40 38Z" fill="#7C6AC7"/>
+      </svg>
+    </div>
+    <span class="logo-text">Soul<span>Guide</span></span>
+  </a>
+  <div class="nav-right">
+    <a href="#what-it-does" class="nav-link">What it does</a>
+    <a href="#privacy" class="nav-link">Privacy</a>
+    <a href="#try" class="nav-cta nav-link">Try it now</a>
+  </div>
+</nav>
+
+<section class="letter-section">
+  <div class="letter-from">
+    <div class="letter-avatar">C</div>
+    <div class="letter-from-text">
+      <strong>Chidubem Nneji</strong>
+      A note from the person who built this
+    </div>
+  </div>
+
+  <div class="letter-body">
+    <h1>I came back to faith.<br>And felt <em>completely</em> lost.</h1>
+
+    <p>I'm not someone who grew up deeply embedded in church. A few years ago I picked my faith back up — or tried to. And what I found was that <strong>coming back is a lot harder than it looks from the outside.</strong></p>
+
+    <p>I couldn't find communities to join. The ones I found felt like they assumed a background I didn't have. I'd open the Bible and not know where to start — or start reading and not understand what I was reading. There was no one to ask the obvious questions without feeling embarrassed. No bible study group. No mentor. Just me and a faith I was trying to rebuild, alone.</p>
+
+    <div class="letter-pull">"The loneliest part wasn't the doubt. It was not having anyone to be honest with about the doubt."</div>
+
+    <p>So I built SoulGuide. Not because I had it figured out — I still don't — but because I needed something that didn't exist. <strong>A companion that would meet me where I actually was.</strong> That wouldn't judge the questions. That would bring scripture to my specific moment, not a generic one. That would help me build a daily practice even when I wasn't sure what I believed yet.</p>
+
+    <p>The companion exists for the 11pm conversations you can't have with anyone else. The Bible reader exists because scripture shouldn't require a theology degree to access. The daily devotional exists because faith is built by showing up, and showing up is easier when something is waiting for you. The community section exists because isolation is the enemy of faith — and I want to fix that too.</p>
+
+    <p>If you're reading this, you probably know me. Which means you know I built this for real, because I genuinely believe it fills a gap. <strong>I'd love for you to try it.</strong> Tell me what's missing. Tell me what lands. This is better because people like you are honest with me.</p>
+
+    <div class="letter-sign">
+      <p>With honesty,</p>
+      <div class="sig">Chidubem</div>
+    </div>
+  </div>
+
+  <div class="letter-actions">
+    <a href="https://spirit-guide-ai-production.up.railway.app" target="_blank" class="btn-primary">
+      Try SoulGuide now
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="#what-it-does" class="btn-outline">See what it does</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="what-section" id="what-it-does">
+  <div class="reveal">
+    <div class="eyebrow">What SoulGuide actually is</div>
+    <h2>Not a church app.<br>Not a Bible quiz.<br><em>A companion.</em></h2>
+    <p>SoulGuide is built around one idea: your faith journey is yours. It doesn't look like anyone else's. The doubt you're carrying, the questions you're circling, the pace you're moving at — all of it is specific to you.</p>
+    <p>Most faith apps give everyone the same content. The same devotional, the same reading plan, the same verse of the day. That's fine if you're already embedded in faith. But if you're returning after time away, or just starting out, or going through something hard — generic doesn't cut it.</p>
+    <p>SoulGuide starts by asking where you actually are. Then it builds everything around your answer. The daily devotional it writes for you. The scripture it surfaces. The way your companion listens. All of it shaped by your specific struggle and your specific journey. And it grows with you — the longer you use it, the more it holds your story.</p>
+  </div>
+</section>
+
+<section class="value-section">
+  <div class="value-inner">
+    <div class="value-header reveal">
+      <div class="eyebrow">What it gives you</div>
+      <h2>Four things I wish I'd had<br>when I came back.</h2>
+      <p>Each one addresses a real gap I experienced. None of them are gimmicks.</p>
+    </div>
+    <div class="value-grid">
+      <div class="value-card reveal">
+        <div class="value-card-icon">🕯️</div>
+        <h3>A devotional written for you, today</h3>
+        <p>Every morning, SoulGuide writes a short devotional using your struggle and your recent journey. <strong>Not copied from a library — written fresh.</strong> A verse that speaks to where you are. A reflection that doesn't feel generic. One practical step you can actually do today. A closing prayer that sounds like it came from your life, because it did.</p>
+      </div>
+      <div class="value-card reveal" style="transition-delay:.1s">
+        <div class="value-card-icon">💬</div>
+        <h3>Someone to talk to at any hour</h3>
+        <p>Your AI companion holds context across every conversation. <strong>It remembers your story.</strong> You don't re-explain yourself every time. Bring the real questions — the ones too small for a sermon, too big for a text — and get a response that actually engages with what you're carrying. No judgment. No easy answers. No pretending it's simple.</p>
+      </div>
+      <div class="value-card reveal" style="transition-delay:.05s">
+        <div class="value-card-icon">📖</div>
+        <h3>Scripture that makes sense</h3>
+        <p>The Bible reader gives you the full text with context. <strong>You can reflect on any passage with your companion</strong> — ask what it means, how it connects to your life, what you're supposed to do with it. No background required. No embarrassing questions. Just honest engagement with the text, at your own pace, without feeling lost.</p>
+      </div>
+      <div class="value-card reveal" style="transition-delay:.15s">
+        <div class="value-card-icon">🔥</div>
+        <h3>A daily practice that actually sticks</h3>
+        <p>Three tasks every morning. A soul check-in, God's message, your devotional. <strong>About five minutes.</strong> A streak to keep you accountable. A week calendar to show you how consistent you've been. Not because faith is a habit to check off, but because showing up daily is how you build something real — and SoulGuide makes showing up easier.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how-section">
+  <div class="reveal">
+    <div class="eyebrow">How it works</div>
+    <h2>From <em>first open</em><br>to daily practice.</h2>
+  </div>
+  <div class="how-steps">
+    <div class="how-step reveal" style="transition-delay:.05s">
+      <div class="how-step-left"><div class="how-num">1</div></div>
+      <div class="how-step-right">
+        <h3>Tell it where you are</h3>
+        <p>A short onboarding — about 3 minutes — where you share your struggle, your goals, and a bit about your faith right now. No right answers. SoulGuide uses this to identify your spiritual archetype and shape everything that follows.</p>
+      </div>
+    </div>
+    <div class="how-step reveal" style="transition-delay:.1s">
+      <div class="how-step-left"><div class="how-num">2</div></div>
+      <div class="how-step-right">
+        <h3>Open your devotional each morning</h3>
+        <p>A personalised reading waits for you every day. The verse. A reflection written for your specific situation. One thing to try today. A closing prayer. Read it in the app, then continue into prayer with your companion.</p>
+      </div>
+    </div>
+    <div class="how-step reveal" style="transition-delay:.15s">
+      <div class="how-step-left"><div class="how-num">3</div></div>
+      <div class="how-step-right">
+        <h3>Talk to your companion</h3>
+        <p>Bring whatever's on your mind. The companion holds your story across every conversation — no resetting. Go deep or keep it brief. Read scripture together. Reflect on a verse. Or just process something you're going through at 11pm with nowhere else to put it.</p>
+      </div>
+    </div>
+    <div class="how-step reveal" style="transition-delay:.2s">
+      <div class="how-step-left"><div class="how-num">4</div></div>
+      <div class="how-step-right">
+        <h3>Watch it grow with you</h3>
+        <p>SoulGuide tracks your consistency. The longer you show up, the more your companion knows your journey. The deeper the devotionals get. The more specific the scripture. Faith is built by showing up — SoulGuide helps you do that.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="arch-section">
+  <div class="arch-inner">
+    <div class="arch-header reveal">
+      <div class="eyebrow">Your spiritual archetype</div>
+      <h2>SoulGuide meets you<br>where you actually are.</h2>
+      <p>During onboarding, SoulGuide identifies which of five archetypes describes your faith right now. It shapes the way your companion listens, the devotionals it writes, and what it notices about your journey over time.</p>
+    </div>
+    <div class="arch-grid">
+      <div class="arch-card reveal">
+        <div class="arch-glyph">🩹</div>
+        <h3>Wounded Seeker</h3>
+        <p>Finding God through the pain. Your companion sits with you rather than rushing you past it.</p>
+      </div>
+      <div class="arch-card reveal" style="transition-delay:.07s">
+        <div class="arch-glyph">🏗️</div>
+        <h3>Eager Builder</h3>
+        <p>Growing deliberately. Less about feelings, more about formation. Building something real.</p>
+      </div>
+      <div class="arch-card reveal" style="transition-delay:.14s">
+        <div class="arch-glyph">🔍</div>
+        <h3>Curious Explorer</h3>
+        <p>Following questions toward faith. Your companion engages your mind, not just your heart.</p>
+      </div>
+      <div class="arch-card reveal" style="transition-delay:.21s">
+        <div class="arch-glyph">🏠</div>
+        <h3>Returning Prodigal</h3>
+        <p>Coming home after time away. Your companion doesn't make you earn trust back.</p>
+      </div>
+      <div class="arch-card reveal" style="transition-delay:.28s">
+        <div class="arch-glyph">⚓</div>
+        <h3>Struggling Saint</h3>
+        <p>Faithful for a long time, but it's hard right now. Your companion holds the tension with you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="privacy-section" id="privacy">
+  <div class="reveal">
+    <div class="eyebrow" style="text-align:center">Privacy</div>
+    <h2>What you share stays<br>between you and SoulGuide.</h2>
+    <p>Your conversations are private by design. Not sold, not used to train models, not shared with anyone. What you bring to your companion stays there.</p>
+    <p>I built this because I needed somewhere safe to be honest about faith. Privacy isn't a feature — it's the foundation. No ads. No data brokering. No algorithm deciding what your faith should look like.</p>
+  </div>
+</section>
+
+<section class="cta-section" id="try">
+  <div class="cta-glow"></div>
+  <h2>Your companion<br>is <em>ready.</em></h2>
+  <p>Takes 3 minutes to set up. No commitment. Just try it.</p>
+  <div class="cta-buttons">
+    <a href="https://spirit-guide-ai-production.up.railway.app" target="_blank" class="btn-white">
+      Try the web app
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="mailto:chidubemnneji@gmail.com" class="btn-ghost">
+      Send me feedback
+    </a>
+  </div>
+  <p class="cta-note">iOS app coming soon · Web version available now</p>
+</section>
+
+<footer>
+  <a href="#" class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 80 80" fill="none"><path d="M40 18 C40 18 28 30 28 42 C28 49 33.5 55 40 55 C46.5 55 52 49 52 42 C52 30 40 18 40 18Z" fill="white"/><path d="M40 38 C40 38 35 44 35 48 C35 51 37.2 53 40 53 C42.8 53 45 51 45 48 C45 44 40 38 40 38Z" fill="#7C6AC7"/></svg>
+    </div>
+    <span class="footer-logo-text">Soul<span>Guide</span></span>
+  </a>
+  <div class="footer-links">
+    <a href="#privacy">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="mailto:chidubemnneji@gmail.com">Contact</a>
+  </div>
+  <div class="footer-copy">Built by Chidubem Nneji &middot; 2025</div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
+  }, {threshold: 0.1});
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
