@@ -9,10 +9,10 @@
   <meta name="description" content="I grew up in faith, drifted away, and found coming back harder than expected. I built SoulGuide for everyone who knows that feeling." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap&display=swap" rel="stylesheet">
   <style>
     :root{color-scheme:light only}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;quotes:none}
     :root{
       --ink:#0f0d0a;--ink-soft:#3d3830;--ink-muted:#7a7268;
       --parchment:#faf7f2;--parchment-dark:#f0ebe1;
@@ -48,6 +48,7 @@
     .letter-body{opacity:0;animation:fadeUp .8s ease .25s forwards}
     .letter-body h1{font-family:var(--serif);font-size:clamp(36px,5vw,54px);font-weight:700;line-height:1.12;letter-spacing:-.02em;color:var(--ink);margin-bottom:36px}
     .letter-body h1 em{font-style:italic;color:var(--flame)}
+    .letter-body h1::after{content:none;display:none}
     .letter-body p{font-size:18px;line-height:1.8;color:var(--ink-soft);margin-bottom:22px;font-weight:300}
     .letter-body p strong{font-weight:500;color:var(--ink)}
     .letter-pull{margin:40px 0;padding:24px 28px;border-left:3px solid var(--gold);background:var(--parchment-dark);border-radius:0 14px 14px 0;font-family:var(--serif);font-size:20px;font-style:italic;color:var(--ink-soft);line-height:1.55}
@@ -236,7 +237,7 @@
   </div>
 
   <div class="letter-body">
-    <h1>I grew up in faith.<br>Then drifted. Then tried<br>to find my way <em>back.</em></h1>
+    <h1>I grew up in faith.<br>Then drifted. Then tried<br>to find my way <em>back</em>.</h1>
 
     <p>Faith was part of my childhood. It was just there, church, prayer, the rhythms of it. But somewhere along the way I drifted, the way a lot of people do. Life gets busy. Distance grows quietly. And then one day you realise it's been a long time.</p>
 
