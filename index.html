@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SoulGuide — A companion for your faith</title>
-  <meta name="description" content="I built SoulGuide because I came back to faith and had no one to walk with. This is for everyone who's ever felt lost on that road." />
+  <meta name="description" content="I grew up in faith, drifted away, and found coming back harder than expected. I built SoulGuide for everyone who knows that feeling." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
@@ -143,6 +143,21 @@
       .btn-primary,.btn-outline,.btn-white,.btn-ghost{width:100%;justify-content:center}
       .arch-grid{grid-template-columns:1fr}
     }
+
+    .feedback-section{background:var(--parchment-dark);padding:80px 48px}
+    .feedback-inner{max-width:600px;margin:0 auto;text-align:center}
+    .feedback-inner h2{font-family:var(--serif);font-size:clamp(26px,3.5vw,36px);font-weight:700;color:var(--ink);margin-bottom:12px}
+    .feedback-inner>p{font-size:16px;color:var(--ink-muted);font-weight:300;margin-bottom:36px;line-height:1.65}
+    .feedback-form{display:flex;flex-direction:column;gap:14px;text-align:left}
+    .feedback-form input,.feedback-form textarea,.feedback-form select{width:100%;padding:13px 16px;border:1.5px solid rgba(15,13,10,.12);border-radius:12px;font-family:var(--sans);font-size:15px;color:var(--ink);background:white;outline:none;transition:border-color .2s}
+    .feedback-form input:focus,.feedback-form textarea:focus,.feedback-form select:focus{border-color:var(--flame)}
+    .feedback-form textarea{resize:vertical;min-height:120px;line-height:1.6}
+    .feedback-form select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a7268' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+    .feedback-submit{background:var(--ink);color:var(--parchment);padding:14px 28px;border-radius:100px;font-size:16px;font-weight:500;border:none;cursor:pointer;width:100%;font-family:var(--sans);transition:background .2s,transform .15s}
+    .feedback-submit:hover{background:var(--flame);transform:translateY(-1px)}
+    .feedback-submit:disabled{opacity:.5;cursor:default;transform:none}
+    .feedback-success{display:none;padding:20px;background:rgba(124,106,199,.08);border:1px solid rgba(124,106,199,.2);border-radius:14px;font-family:var(--serif);font-size:17px;font-style:italic;color:var(--flame);text-align:center}
+    @media(max-width:860px){.feedback-section{padding:60px 24px}}
   </style>
 </head>
 <body>
@@ -174,19 +189,21 @@
   </div>
 
   <div class="letter-body">
-    <h1>I came back to faith.<br>And felt <em>completely</em> lost.</h1>
+    <h1>I grew up in faith.<br>Then drifted. Then tried<br>to find my way <em>back.</em></h1>
 
-    <p>I'm not someone who grew up deeply embedded in church. A few years ago I picked my faith back up — or tried to. And what I found was that <strong>coming back is a lot harder than it looks from the outside.</strong></p>
+    <p>Faith was part of my childhood. It was just there — church, prayer, the rhythms of it. But somewhere along the way I drifted, the way a lot of people do. Life gets busy. Distance grows quietly. And then one day you realise it's been a long time.</p>
 
-    <p>I couldn't find communities to join. The ones I found felt like they assumed a background I didn't have. I'd open the Bible and not know where to start — or start reading and not understand what I was reading. There was no one to ask the obvious questions without feeling embarrassed. No bible study group. No mentor. Just me and a faith I was trying to rebuild, alone.</p>
+    <p>Coming back felt like the right thing to do. What I didn't expect was how <strong>hard the door would be to open from the outside.</strong> I'd been away long enough that I didn't know where to start. The communities I found assumed a level of familiarity I no longer had. I'd sit in services feeling like everyone else was reading from a script I'd forgotten. I'd open the Bible and not really understand what I was reading, with no one to ask without feeling embarrassed about how much I'd lost.</p>
 
-    <div class="letter-pull">"The loneliest part wasn't the doubt. It was not having anyone to be honest with about the doubt."</div>
+    <div class="letter-pull">"Being an introvert didn't help. Church culture rewards the people who can walk into a room of strangers and feel at home. I'm not one of those people."</div>
 
-    <p>So I built SoulGuide. Not because I had it figured out — I still don't — but because I needed something that didn't exist. <strong>A companion that would meet me where I actually was.</strong> That wouldn't judge the questions. That would bring scripture to my specific moment, not a generic one. That would help me build a daily practice even when I wasn't sure what I believed yet.</p>
+    <p>No bible study group I could quietly join. No mentor. No space to ask the obvious questions. Just me, trying to rebuild something I'd let go of, without a map and without company. The loneliest part wasn't the doubt — it was not having anyone to be honest with about the doubt.</p>
 
-    <p>The companion exists for the 11pm conversations you can't have with anyone else. The Bible reader exists because scripture shouldn't require a theology degree to access. The daily devotional exists because faith is built by showing up, and showing up is easier when something is waiting for you. The community section exists because isolation is the enemy of faith — and I want to fix that too.</p>
+    <p>So I built SoulGuide. Not because I had it figured out — <strong>I still don't</strong> — but because I needed something that didn't exist. A companion that would meet me where I actually was. That wouldn't assume background I didn't have. That would bring scripture to my specific moment. That would help me show up daily even when I wasn't sure what I believed yet.</p>
 
-    <p>If you're reading this, you probably know me. Which means you know I built this for real, because I genuinely believe it fills a gap. <strong>I'd love for you to try it.</strong> Tell me what's missing. Tell me what lands. This is better because people like you are honest with me.</p>
+    <p>The Bible reader exists because scripture shouldn't require a theology degree. The AI companion exists for the questions too small for a sermon and too big for a text. The devotional exists because faith is built by showing up, and showing up is easier when something is waiting for you. The community section is coming because I know isolation is the enemy of faith — and I want to fix that for people like me.</p>
+
+    <p>If you're reading this, you probably know me. Which means you know I built this for real. <strong>I'd love for you to try it and tell me honestly what you think.</strong> This gets better because people like you are straight with me.</p>
 
     <div class="letter-sign">
       <p>With honesty,</p>
@@ -346,6 +363,32 @@
   <p class="cta-note">iOS app coming soon · Web version available now</p>
 </section>
 
+
+<section class="feedback-section">
+  <div class="feedback-inner reveal">
+    <div class="eyebrow" style="text-align:center">Share your thoughts</div>
+    <h2>Tell me what you think.</h2>
+    <p>I'm building this in the open, and your honest feedback shapes what comes next. What landed? What's missing? What would make you actually use this every day?</p>
+    <form class="feedback-form" id="feedbackForm">
+      <input type="text" placeholder="Your name (optional)" id="fb-name" />
+      <input type="email" placeholder="Your email (optional — only if you want a reply)" id="fb-email" />
+      <select id="fb-type">
+        <option value="" disabled selected>What kind of feedback is this?</option>
+        <option value="bug">Something's broken</option>
+        <option value="feature">I'd love a feature</option>
+        <option value="experience">My experience using it</option>
+        <option value="story">My faith story / why this matters to me</option>
+        <option value="other">Something else</option>
+      </select>
+      <textarea placeholder="Be as honest as you like. I read every message." id="fb-message"></textarea>
+      <button type="submit" class="feedback-submit" id="fb-submit">Send feedback</button>
+    </form>
+    <div class="feedback-success" id="feedbackSuccess">
+      Thank you. I'll read this. — Chidubem
+    </div>
+  </div>
+</section>
+
 <footer>
   <a href="#" class="logo">
     <div class="logo-mark">
@@ -366,6 +409,31 @@
     entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
   }, {threshold: 0.1});
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  document.getElementById('feedbackForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('fb-submit');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    const body = {
+      name: document.getElementById('fb-name').value,
+      email: document.getElementById('fb-email').value,
+      type: document.getElementById('fb-type').value,
+      message: document.getElementById('fb-message').value,
+    };
+
+    try {
+      await fetch('https://formspree.io/f/xyzgpdna', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(body)
+      });
+    } catch(err) {}
+
+    document.getElementById('feedbackForm').style.display = 'none';
+    document.getElementById('feedbackSuccess').style.display = 'block';
+  });
 </script>
 
 </body>
